@@ -12,7 +12,6 @@ export default class MyApp extends App<{
   initialState: TStoreSnapshotIn;
 }> {
   static async getInitialProps({ Component, ctx }) {
-    console.log('getting initialprops');
     const isServer = typeof window === 'undefined';
     const store = createStore(isServer);
 

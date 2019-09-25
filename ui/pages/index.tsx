@@ -1,15 +1,18 @@
 import React from 'react';
 import { useStore } from '../src/storeProvider';
 import { useObserver } from 'mobx-react-lite';
+import { Button, Badge, Box, Chip } from '@material-ui/core';
 
 export default function IndexPage() {
   const store = useStore();
 
   return useObserver(() => (
-    <div>
-      <div>{store.count}</div>
-      <button onClick={store.increment}>Increment</button>
-      <button onClick={store.decrement}>Decrement</button>
-    </div>
+    <Box>
+      <Button onClick={store.decrement}>Decrement</Button>
+      <Chip label={store.count} variant="outlined" />
+      <Button color="primary" onClick={store.increment}>
+        Increment
+      </Button>
+    </Box>
   ));
 }
