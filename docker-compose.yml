@@ -1,0 +1,41 @@
+version: '3.3'
+
+volumes:
+  db:
+
+services:
+  api:
+    build:
+      context: ./docker/
+      dockerfile: Dockerfile.api
+    environment:
+      - APP_NAME=strapi-app
+      - DATABASE_CLIENT=mongo
+      - DATABASE_HOST=db
+      - DATABASE_PORT=27017
+      - DATABASE_NAME=strapi
+      - DATABASE_USERNAME=
+      - DATABASE_PASSWORD=
+      - DATABASE_SSL=false
+      - DATABASE_AUTHENTICATION_DATABASE=strapi
+      - HOST=localhost
+    ports:
+      - 1337:1337
+    volumes:
+      - ./api:/usr/src/api/strapi-app:cached
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    build:
+      context: ./docker/
+      dockerfile: Dockerfile.db
+    environment:
+      - MONGO_INITDB_DATABASE=strapi
+    ports:
+      - 27017:27017
+    volumes:
+      - db:/data/db
+      - ./db-backup:/db-backup
+    restart: unless-stopped

@@ -1,0 +1,639 @@
+type Config {
+  _id: ID!
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  eventInfo: String
+}
+
+type ConfigAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type ConfigConnection {
+  values: [Config]
+  groupBy: ConfigGroupBy
+  aggregate: ConfigAggregator
+}
+
+type ConfigConnection_id {
+  key: ID
+  connection: ConfigConnection
+}
+
+type ConfigConnectionCreatedAt {
+  key: DateTime
+  connection: ConfigConnection
+}
+
+type ConfigConnectionEventInfo {
+  key: String
+  connection: ConfigConnection
+}
+
+type ConfigConnectionId {
+  key: ID
+  connection: ConfigConnection
+}
+
+type ConfigConnectionUpdatedAt {
+  key: DateTime
+  connection: ConfigConnection
+}
+
+type ConfigGroupBy {
+  _id: [ConfigConnection_id]
+  id: [ConfigConnectionId]
+  createdAt: [ConfigConnectionCreatedAt]
+  updatedAt: [ConfigConnectionUpdatedAt]
+  eventInfo: [ConfigConnectionEventInfo]
+}
+
+input ConfigInput {
+  eventInfo: String
+}
+
+input createConfigInput {
+  data: ConfigInput
+}
+
+type createConfigPayload {
+  config: Config
+}
+
+input createRoleInput {
+  data: RoleInput
+}
+
+type createRolePayload {
+  role: UsersPermissionsRole
+}
+
+input createUserInput {
+  data: UserInput
+}
+
+type createUserPayload {
+  user: UsersPermissionsUser
+}
+
+input createVideoInput {
+  data: VideoInput
+}
+
+type createVideoPayload {
+  video: Video
+}
+
+"""
+The `DateTime` scalar represents a date and time following the ISO 8601 standard
+"""
+scalar DateTime
+
+input deleteConfigInput {
+  where: InputID
+}
+
+type deleteConfigPayload {
+  config: Config
+}
+
+input deleteRoleInput {
+  where: InputID
+}
+
+type deleteRolePayload {
+  role: UsersPermissionsRole
+}
+
+input deleteUserInput {
+  where: InputID
+}
+
+type deleteUserPayload {
+  user: UsersPermissionsUser
+}
+
+input deleteVideoInput {
+  where: InputID
+}
+
+type deleteVideoPayload {
+  video: Video
+}
+
+input editConfigInput {
+  eventInfo: String
+}
+
+input editFileInput {
+  name: String
+  hash: String
+  sha256: String
+  ext: String
+  mime: String
+  size: String
+  url: String
+  provider: String
+  public_id: String
+  related: [ID]
+}
+
+input editRoleInput {
+  name: String
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+}
+
+input editUserInput {
+  username: String
+  email: String
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+}
+
+input editVideoInput {
+  title: String
+  description: String
+  media: ID
+  cover: [ID]
+}
+
+input FileInput {
+  name: String!
+  hash: String!
+  sha256: String
+  ext: String
+  mime: String!
+  size: String!
+  url: String!
+  provider: String!
+  public_id: String
+  related: [ID]
+}
+
+input InputID {
+  id: ID!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""The `Long` scalar type represents 52-bit integers"""
+scalar Long
+
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Config | createConfigPayload | updateConfigPayload | deleteConfigPayload | ConfigConnection | ConfigAggregator | ConfigGroupBy | ConfigConnection_id | ConfigConnectionId | ConfigConnectionCreatedAt | ConfigConnectionUpdatedAt | ConfigConnectionEventInfo | Video | createVideoPayload | updateVideoPayload | deleteVideoPayload | VideoConnection | VideoAggregator | VideoGroupBy | VideoConnection_id | VideoConnectionId | VideoConnectionCreatedAt | VideoConnectionUpdatedAt | VideoConnectionTitle | VideoConnectionDescription | VideoConnectionMedia | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionId | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UploadFileConnectionPublic_id | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
+
+type Mutation {
+  createConfig(input: createConfigInput): createConfigPayload
+  updateConfig(input: updateConfigInput): updateConfigPayload
+  deleteConfig(input: deleteConfigInput): deleteConfigPayload
+  createVideo(input: createVideoInput): createVideoPayload
+  updateVideo(input: updateVideoInput): updateVideoPayload
+  deleteVideo(input: deleteVideoInput): deleteVideoPayload
+
+  """Create a new role"""
+  createRole(input: createRoleInput): createRolePayload
+
+  """Update an existing role"""
+  updateRole(input: updateRoleInput): updateRolePayload
+
+  """Delete an existing role"""
+  deleteRole(input: deleteRoleInput): deleteRolePayload
+
+  """Create a new user"""
+  createUser(input: createUserInput): createUserPayload
+
+  """Update an existing user"""
+  updateUser(input: updateUserInput): updateUserPayload
+
+  """Delete an existing user"""
+  deleteUser(input: deleteUserInput): deleteUserPayload
+  upload(refId: ID, ref: String, source: String, file: Upload!): UploadFile!
+}
+
+type Query {
+  config(id: ID!): Config
+  configs(sort: String, limit: Int, start: Int, where: JSON): [Config]
+  configsConnection(sort: String, limit: Int, start: Int, where: JSON): ConfigConnection
+  video(id: ID!): Video
+  videos(sort: String, limit: Int, start: Int, where: JSON): [Video]
+  videosConnection(sort: String, limit: Int, start: Int, where: JSON): VideoConnection
+  files(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
+  filesConnection(sort: String, limit: Int, start: Int, where: JSON): UploadFileConnection
+  role(id: ID!): UsersPermissionsRole
+
+  """
+  Retrieve all the existing roles. You can't apply filters on this query.
+  """
+  roles(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsRole]
+  rolesConnection(sort: String, limit: Int, start: Int, where: JSON): UsersPermissionsRoleConnection
+  user(id: ID!): UsersPermissionsUser
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+  usersConnection(sort: String, limit: Int, start: Int, where: JSON): UsersPermissionsUserConnection
+  me: UsersPermissionsMe
+}
+
+input RoleInput {
+  name: String!
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+}
+
+input updateConfigInput {
+  where: InputID
+  data: editConfigInput
+}
+
+type updateConfigPayload {
+  config: Config
+}
+
+input updateRoleInput {
+  where: InputID
+  data: editRoleInput
+}
+
+type updateRolePayload {
+  role: UsersPermissionsRole
+}
+
+input updateUserInput {
+  where: InputID
+  data: editUserInput
+}
+
+type updateUserPayload {
+  user: UsersPermissionsUser
+}
+
+input updateVideoInput {
+  where: InputID
+  data: editVideoInput
+}
+
+type updateVideoPayload {
+  video: Video
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type UploadFile {
+  _id: ID!
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  hash: String!
+  sha256: String
+  ext: String
+  mime: String!
+  size: String!
+  url: String!
+  provider: String!
+  public_id: String
+  related(sort: String, limit: Int, start: Int, where: JSON): [Morph]
+}
+
+type UploadFileAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type UploadFileConnection {
+  values: [UploadFile]
+  groupBy: UploadFileGroupBy
+  aggregate: UploadFileAggregator
+}
+
+type UploadFileConnection_id {
+  key: ID
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionCreatedAt {
+  key: DateTime
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionExt {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionHash {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionId {
+  key: ID
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionMime {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionName {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionProvider {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionPublic_id {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionSha256 {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionSize {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionUpdatedAt {
+  key: DateTime
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionUrl {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileGroupBy {
+  _id: [UploadFileConnection_id]
+  id: [UploadFileConnectionId]
+  createdAt: [UploadFileConnectionCreatedAt]
+  updatedAt: [UploadFileConnectionUpdatedAt]
+  name: [UploadFileConnectionName]
+  hash: [UploadFileConnectionHash]
+  sha256: [UploadFileConnectionSha256]
+  ext: [UploadFileConnectionExt]
+  mime: [UploadFileConnectionMime]
+  size: [UploadFileConnectionSize]
+  url: [UploadFileConnectionUrl]
+  provider: [UploadFileConnectionProvider]
+  public_id: [UploadFileConnectionPublic_id]
+}
+
+input UserInput {
+  username: String!
+  email: String!
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+}
+
+type UsersPermissionsMe {
+  _id: ID!
+  username: String!
+  email: String!
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsMeRole
+}
+
+type UsersPermissionsMeRole {
+  _id: ID!
+  name: String!
+  description: String
+  type: String
+}
+
+type UsersPermissionsPermission {
+  _id: ID!
+  id: ID!
+  type: String!
+  controller: String!
+  action: String!
+  enabled: Boolean!
+  policy: String
+  role: UsersPermissionsRole
+}
+
+type UsersPermissionsRole {
+  _id: ID!
+  id: ID!
+  name: String!
+  description: String
+  type: String
+  permissions(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsPermission]
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+}
+
+type UsersPermissionsRoleAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type UsersPermissionsRoleConnection {
+  values: [UsersPermissionsRole]
+  groupBy: UsersPermissionsRoleGroupBy
+  aggregate: UsersPermissionsRoleAggregator
+}
+
+type UsersPermissionsRoleConnection_id {
+  key: ID
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionDescription {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionId {
+  key: ID
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionName {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionType {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleGroupBy {
+  _id: [UsersPermissionsRoleConnection_id]
+  id: [UsersPermissionsRoleConnectionId]
+  name: [UsersPermissionsRoleConnectionName]
+  description: [UsersPermissionsRoleConnectionDescription]
+  type: [UsersPermissionsRoleConnectionType]
+}
+
+type UsersPermissionsUser {
+  _id: ID!
+  id: ID!
+  username: String!
+  email: String!
+  provider: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsRole
+}
+
+type UsersPermissionsUserAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type UsersPermissionsUserConnection {
+  values: [UsersPermissionsUser]
+  groupBy: UsersPermissionsUserGroupBy
+  aggregate: UsersPermissionsUserAggregator
+}
+
+type UsersPermissionsUserConnection_id {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionBlocked {
+  key: Boolean
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionConfirmed {
+  key: Boolean
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionEmail {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionId {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionProvider {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionRole {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionUsername {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserGroupBy {
+  _id: [UsersPermissionsUserConnection_id]
+  id: [UsersPermissionsUserConnectionId]
+  username: [UsersPermissionsUserConnectionUsername]
+  email: [UsersPermissionsUserConnectionEmail]
+  provider: [UsersPermissionsUserConnectionProvider]
+  confirmed: [UsersPermissionsUserConnectionConfirmed]
+  blocked: [UsersPermissionsUserConnectionBlocked]
+  role: [UsersPermissionsUserConnectionRole]
+}
+
+type Video {
+  _id: ID!
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String
+  description: String
+  media: UploadFile
+  cover(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
+}
+
+type VideoAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type VideoConnection {
+  values: [Video]
+  groupBy: VideoGroupBy
+  aggregate: VideoAggregator
+}
+
+type VideoConnection_id {
+  key: ID
+  connection: VideoConnection
+}
+
+type VideoConnectionCreatedAt {
+  key: DateTime
+  connection: VideoConnection
+}
+
+type VideoConnectionDescription {
+  key: String
+  connection: VideoConnection
+}
+
+type VideoConnectionId {
+  key: ID
+  connection: VideoConnection
+}
+
+type VideoConnectionMedia {
+  key: ID
+  connection: VideoConnection
+}
+
+type VideoConnectionTitle {
+  key: String
+  connection: VideoConnection
+}
+
+type VideoConnectionUpdatedAt {
+  key: DateTime
+  connection: VideoConnection
+}
+
+type VideoGroupBy {
+  _id: [VideoConnection_id]
+  id: [VideoConnectionId]
+  createdAt: [VideoConnectionCreatedAt]
+  updatedAt: [VideoConnectionUpdatedAt]
+  title: [VideoConnectionTitle]
+  description: [VideoConnectionDescription]
+  media: [VideoConnectionMedia]
+}
+
+input VideoInput {
+  title: String
+  description: String
+  media: ID
+  cover: [ID]
+}

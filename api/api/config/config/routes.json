@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/configs",
+      "handler": "Config.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/configs/count",
+      "handler": "Config.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/configs/:_id",
+      "handler": "Config.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/configs",
+      "handler": "Config.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/configs/:_id",
+      "handler": "Config.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/configs/:_id",
+      "handler": "Config.destroy",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "connection": "default",
+  "collectionName": "Config",
+  "info": {
+    "name": "config",
+    "description": ""
+  },
+  "options": {
+    "timestamps": true
+  },
+  "attributes": {
+    "eventInfo": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,4 @@
+FROM strapi/strapi
+
+RUN apk add --no-cache tzdata \
+  && ln -sf /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
