@@ -41,13 +41,7 @@ module.exports = {
     'max-len': ['error', { code: 100 }],
     '@typescript-eslint/explicit-member-accessibility': 'off',
     'max-classes-per-file': 'off',
-    '@typescript-eslint/explicit-function-return-type': [
-      'error',
-      {
-        allowExpressions: true,
-        allowTypedFunctionExpressions: true,
-      },
-    ],
+    '@typescript-eslint/explicit-function-return-type': 'off',
     'react/no-unescaped-entities': 'off',
     ...disableA11yRules(),
   },
@@ -64,14 +58,11 @@ module.exports = {
       rules: {
         'no-param-reassign': 'off',
         '@typescript-eslint/no-use-before-define': 'off',
-        '@typescript-eslint/explicit-function-return-type': 'off',
       },
     },
     {
       files: ['**/pages/**/*'],
-      rules: {
-        '@typescript-eslint/explicit-function-return-type': 'off',
-      },
+      rules: {},
     },
   ],
 };
