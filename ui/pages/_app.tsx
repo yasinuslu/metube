@@ -1,11 +1,8 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import App from 'next/app';
-import {
-  createStore,
-  StoreProvider,
-  TStoreSnapshotIn,
-} from '../src/storeProvider';
 import { getSnapshot } from 'mobx-state-tree';
+import { StoreProvider, TStoreSnapshotIn, initializeStore } from '../src/storeProvider';
 
 export default class MyApp extends App<{
   isServer: boolean;
@@ -13,7 +10,7 @@ export default class MyApp extends App<{
 }> {
   static async getInitialProps({ Component, ctx }) {
     const isServer = typeof window === 'undefined';
-    const store = createStore(isServer);
+    const store = initializeStore(isServer);
 
     let pageProps = {};
     if (Component.getInitialProps) {

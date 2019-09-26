@@ -1,4 +1,4 @@
-import { types, destroy, getRoot, getParentOfType } from 'mobx-state-tree';
+import { destroy, getParentOfType, types } from 'mobx-state-tree';
 
 // eslint-disable-next-line @typescript-eslint/no-use-before-define
 export type TTodo = ReturnType<typeof Todo.create>;
