@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
+    "debug": "NODE_OPTIONS='--inspect' next",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --ext .ts,.tsx ."
@@ -12,6 +13,7 @@
     "@material-ui/icons": "^4.4.3",
     "@material-ui/styles": "^4.4.3",
     "clsx": "^1.0.4",
+    "graphql-request": "^1.8.2",
     "mobx": "^5.9.0",
     "mobx-devtools-mst": "^0.9.21",
     "mobx-react": "^5.4.3",

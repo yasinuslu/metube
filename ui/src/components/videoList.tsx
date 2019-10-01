@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { VideoCard } from './videoCard';
-import { TVideo } from '../types';
+import { TVideo } from '../models/videoStore';
 
 const useStyles = makeStyles(theme => ({
   root: {

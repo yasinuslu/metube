@@ -10,11 +10,16 @@ export type TStoreSnapshotOut = SnapshotOut<typeof Store>;
 
 let globalStore: TStore;
 
+const isServer = typeof window === 'undefined';
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function initializeStore(isServer: boolean, snapshot: TStoreSnapshotIn = null) {
+export function initializeStore(snapshot: TStoreSnapshotIn = null) {
   globalStore = createStore();
 
   if (!isServer) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    window.store = globalStore;
     makeInspectable(globalStore);
   }
 
@@ -28,10 +33,9 @@ export function initializeStore(isServer: boolean, snapshot: TStoreSnapshotIn = 
 const StoreContext = React.createContext<TStore | null>(null);
 
 export const StoreProvider: React.FC<{
-  isServer: boolean;
   initialState: TStoreSnapshotIn;
-}> = ({ children, isServer, initialState }) => {
-  const store = useLocalStore(() => initializeStore(isServer, initialState));
+}> = ({ children, initialState }) => {
+  const store = useLocalStore(() => initializeStore(initialState));
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
 };
 

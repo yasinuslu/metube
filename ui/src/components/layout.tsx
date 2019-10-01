@@ -15,6 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { Container } from 'next/app';
+import Link from 'next/link';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -174,9 +175,11 @@ export const Layout: React.FC<{}> = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            MeTube
-          </Typography>
+          <Link href="/">
+            <Typography className={classes.title} variant="h6" noWrap>
+              MeTube
+            </Typography>
+          </Link>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
