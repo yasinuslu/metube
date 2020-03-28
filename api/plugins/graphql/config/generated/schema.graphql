@@ -163,7 +163,7 @@ input editVideoInput {
   title: String
   description: String
   media: ID
-  cover: [ID]
+  cover: ID
 }
 
 input FileInput {
@@ -191,7 +191,7 @@ scalar JSON
 """The `Long` scalar type represents 52-bit integers"""
 scalar Long
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Config | createConfigPayload | updateConfigPayload | deleteConfigPayload | ConfigConnection | ConfigAggregator | ConfigGroupBy | ConfigConnection_id | ConfigConnectionId | ConfigConnectionCreatedAt | ConfigConnectionUpdatedAt | ConfigConnectionEventInfo | Video | createVideoPayload | updateVideoPayload | deleteVideoPayload | VideoConnection | VideoAggregator | VideoGroupBy | VideoConnection_id | VideoConnectionId | VideoConnectionCreatedAt | VideoConnectionUpdatedAt | VideoConnectionTitle | VideoConnectionDescription | VideoConnectionMedia | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionId | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UploadFileConnectionPublic_id | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Config | createConfigPayload | updateConfigPayload | deleteConfigPayload | ConfigConnection | ConfigAggregator | ConfigGroupBy | ConfigConnection_id | ConfigConnectionId | ConfigConnectionCreatedAt | ConfigConnectionUpdatedAt | ConfigConnectionEventInfo | Video | createVideoPayload | updateVideoPayload | deleteVideoPayload | VideoConnection | VideoAggregator | VideoGroupBy | VideoConnection_id | VideoConnectionId | VideoConnectionCreatedAt | VideoConnectionUpdatedAt | VideoConnectionTitle | VideoConnectionDescription | VideoConnectionMedia | VideoConnectionCover | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionId | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UploadFileConnectionPublic_id | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
 
 type Mutation {
   createConfig(input: createConfigInput): createConfigPayload
@@ -572,7 +572,7 @@ type Video {
   title: String
   description: String
   media: UploadFile
-  cover(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
+  cover: UploadFile
 }
 
 type VideoAggregator {
@@ -587,6 +587,11 @@ type VideoConnection {
 }
 
 type VideoConnection_id {
+  key: ID
+  connection: VideoConnection
+}
+
+type VideoConnectionCover {
   key: ID
   connection: VideoConnection
 }
@@ -629,11 +634,12 @@ type VideoGroupBy {
   title: [VideoConnectionTitle]
   description: [VideoConnectionDescription]
   media: [VideoConnectionMedia]
+  cover: [VideoConnectionCover]
 }
 
 input VideoInput {
   title: String
   description: String
   media: ID
-  cover: [ID]
+  cover: ID
 }

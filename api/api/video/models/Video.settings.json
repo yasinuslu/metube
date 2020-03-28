@@ -21,7 +21,7 @@
       "plugin": "upload"
     },
     "cover": {
-      "collection": "file",
+      "model": "file",
       "via": "related",
       "plugin": "upload"
     }

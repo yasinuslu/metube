@@ -1,0 +1,41 @@
+apiVersion: skaffold/v1beta13
+kind: Config
+build:
+  artifacts:
+    - image: gcr.io/metube/api
+      context: ./docker/
+      docker:
+        dockerfile: Dockerfile.api
+        target: dev
+    - image: gcr.io/metube/ui
+      context: ./ui
+      docker:
+        target: dev
+      sync:
+        manual:
+          - src: "pages/**/*"
+            dest: .
+          - src: "src/**/*"
+            dest: .
+
+deploy:
+  helm:
+    releases:
+      - name: metube
+        chartPath: metube
+        skipBuildDependencies: true
+        values:
+          "ui.image": gcr.io/metube/ui
+
+profiles:
+  - name: prod
+    build:
+      artifacts:
+        - image: gcr.io/metube/api
+          context: ./api
+          docker:
+            dockerfile: ../docker/Dockerfile.api
+        - image: gcr.io/micro-frontends/ui
+          context: ./ui
+          docker:
+            target: prod

@@ -1,4 +1,12 @@
-FROM strapi/strapi
+FROM strapi/strapi as base
 
-RUN apk add --no-cache tzdata \
-  && ln -sf /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
+# following stage is only for expressing intention for when building this
+# but it can be used in the future for further customization
+# Build Context: ./docker/
+FROM base as dev
+
+# we change build context
+# Build Context: ./api/
+FROM base as prod
+
+COPY . /usr/src/api/strapi-app

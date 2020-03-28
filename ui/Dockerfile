@@ -6,9 +6,9 @@ ENV TZ ${TZ}
 
 WORKDIR /app
 
-COPY package.json yarn.lock /app/
-
 RUN apk add --update util-linux git python make bash g++ tzdata
+
+COPY package.json yarn.lock /app/
 
 RUN yarn install --frozen-lockfile
 
